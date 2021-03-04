@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import { BrowserRouter, Route } from 'react-router-dom';
+import App from './Twitch/App';
 
 ReactDOM.render(
 	<React.StrictMode>
