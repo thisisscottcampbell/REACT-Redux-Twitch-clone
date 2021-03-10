@@ -4,15 +4,31 @@ import { Field, reduxForm } from 'redux-form';
 const StreamCreate = (props) => {
 	const renderInput = (formProps) => {
 		return (
-			<div className="field">
+			<div
+				className={
+					formProps.meta.error && formProps.meta.touched
+						? 'field error'
+						: 'field'
+				}
+			>
 				{formProps.label}:
 				<input
 					onChange={formProps.input.onChange}
 					value={formProps.input.value}
 				/>
-				<div>{formProps.meta.error}</div>
+				{renderError(formProps.meta)}
 			</div>
 		);
+	};
+
+	const renderError = (data) => {
+		if (data.touched && data.error) {
+			return (
+				<div className="ui error message">
+					<div className="header">{data.error}</div>
+				</div>
+			);
+		}
 	};
 
 	const onSubmit = (data) => {
@@ -21,7 +37,7 @@ const StreamCreate = (props) => {
 
 	return (
 		<div>
-			<form onSubmit={props.handleSubmit(onSubmit)} className="ui form">
+			<form onSubmit={props.handleSubmit(onSubmit)} className="ui form error">
 				<Field name="title" component={renderInput} label="Title" />
 				<Field name="description" component={renderInput} label="Description" />
 				<button className="ui button primary">Submit</button>
