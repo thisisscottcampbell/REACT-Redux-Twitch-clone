@@ -10,22 +10,13 @@ const StreamCreate = (props) => {
 					onChange={formProps.input.onChange}
 					value={formProps.input.value}
 				/>
+				<div>{formProps.meta.error}</div>
 			</div>
 		);
 	};
 
 	const onSubmit = (data) => {
 		console.log(data);
-	};
-
-	const validate = (data) => {
-		const errors = {};
-
-		if (!data.title) errors.title = 'You must enter a title';
-
-		if (!data.description) errors.description = 'You must enter a description';
-
-		return errors;
 	};
 
 	return (
@@ -39,6 +30,17 @@ const StreamCreate = (props) => {
 	);
 };
 
+const validate = (data) => {
+	const errors = {};
+
+	if (!data.title) errors.title = 'You must enter a title';
+
+	if (!data.description) errors.description = 'You must enter a description';
+
+	return errors;
+};
+
 export default reduxForm({
 	form: 'streamCreate',
+	validate,
 })(StreamCreate);
