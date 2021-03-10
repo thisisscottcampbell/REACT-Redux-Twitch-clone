@@ -18,6 +18,16 @@ const StreamCreate = (props) => {
 		console.log(data);
 	};
 
+	const validate = (data) => {
+		const errors = {};
+
+		if (!data.title) errors.title = 'You must enter a title';
+
+		if (!data.description) errors.description = 'You must enter a description';
+
+		return errors;
+	};
+
 	return (
 		<div>
 			<form onSubmit={props.handleSubmit(onSubmit)} className="ui form">
