@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getStreams } from '../../actions';
 
@@ -7,7 +8,7 @@ class StreamList extends React.Component {
 		this.props.getStreams();
 	}
 
-	renderAdmins(stream) {
+	admins(stream) {
 		if (stream.userId === this.props.currUserId)
 			return (
 				<div className="right floated content">
@@ -16,11 +17,12 @@ class StreamList extends React.Component {
 				</div>
 			);
 	}
+
 	renderList() {
 		return this.props.streams.map((stream) => {
 			return (
 				<div className="item" key={stream.id}>
-					{this.renderAdmins(stream)}
+					{this.admins(stream)}
 					<i className="large middle aligned icon camera" />
 					<div className="content">
 						{stream.title}
@@ -30,12 +32,27 @@ class StreamList extends React.Component {
 			);
 		});
 	}
+
+	createStreamLink() {
+		if (this.props.isSignedIn) {
+			return (
+				<div style={{ textAlign: 'right' }}>
+					<Link to="/streams/new" className="ui button primary">
+						Create Stream
+					</Link>
+				</div>
+			);
+		}
+	}
+
 	render() {
 		const list = this.renderList();
+		const link = this.createStreamLink();
 		return (
 			<div>
 				<h2>Streams</h2>
 				<div className="ui celled list">{list}</div>
+				{link}
 			</div>
 		);
 	}
@@ -45,6 +62,7 @@ const mapStateToProps = (state) => {
 	return {
 		streams: Object.values(state.streams),
 		currUserId: state.auth.userId,
+		isSignedIn: state.auth.isSignedIn,
 	};
 };
 
