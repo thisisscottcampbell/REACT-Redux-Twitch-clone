@@ -4,6 +4,17 @@
       "title": "stream",
       "description": "stream",
       "id": 1
+    },
+    {
+      "title": "Stream one",
+      "description": "Cool stream",
+      "id": 2
+    },
+    {
+      "title": "test",
+      "description": "test",
+      "userId": "104882763864623728677",
+      "id": 3
     }
   ]
 }
