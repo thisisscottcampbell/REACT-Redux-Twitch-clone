@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import streams from '../apis/streams';
+import history from '../history';
 import {
 	SIGN_IN,
 	SIGN_OUT,
@@ -29,6 +30,7 @@ export const createStream = (formData) => async (dispatch, getState) => {
 	const res = await streams.post('/streams', { ...formData, userId });
 
 	dispatch({ type: CREATE_STREAM, payload: res.data });
+	history.push('/');
 };
 
 export const getStreams = () => async (dispatch) => {
