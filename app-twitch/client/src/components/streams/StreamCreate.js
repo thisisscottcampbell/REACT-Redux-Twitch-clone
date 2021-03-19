@@ -4,13 +4,14 @@ import { createStream } from '../../actions';
 import StreamForm from './StreamForm';
 
 class StreamCreate extends React.Component {
-	handleSubmit = (formValues) => this.props.createStream(formValues);
+	callCreate = (formValues) => this.props.createStream(formValues);
 
 	render() {
+		console.log('create props', this.props);
 		return (
 			<div>
 				<h3>Create A Stream</h3>
-				<StreamForm handleSubmit={this.handleSubmit} />
+				<StreamForm callCreate={this.callCreate} />
 			</div>
 		);
 	}

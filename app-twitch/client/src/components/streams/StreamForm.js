@@ -24,10 +24,11 @@ class StreamForm extends React.Component {
 	};
 
 	formSubmit = (formValues) => {
-		this.props.handleSubmit(formValues);
+		this.props.callCreate(formValues);
 	};
 
 	render() {
+		console.log('form props', this.props);
 		return (
 			<form
 				onSubmit={this.props.handleSubmit(this.formSubmit)}
@@ -59,9 +60,7 @@ const validate = (formValues) => {
 	return errors;
 };
 
-const formWrapped = reduxForm({
+export default reduxForm({
 	form: 'streamForm',
 	validate,
 })(StreamForm);
-
-export default formWrapped;
