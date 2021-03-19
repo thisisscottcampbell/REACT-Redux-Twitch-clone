@@ -24,7 +24,12 @@ class StreamForm extends React.Component {
 	};
 
 	formSubmit = (formValues) => {
-		this.props.callCreate(formValues);
+		let action;
+
+		if (this.props.callCreate) action = this.props.callCreate;
+		else if (this.props.callEdit) action = this.props.callEdit;
+
+		action(formValues);
 	};
 
 	render() {
