@@ -6,6 +6,7 @@ const StreamDetail = ({ match, getStream, stream }) => {
 	const { id } = match.params;
 
 	useEffect(() => getStream(id), []);
+
 	return stream ? (
 		<div>
 			<h2>{stream.title}</h2>
