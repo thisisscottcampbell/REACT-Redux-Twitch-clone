@@ -3,13 +3,9 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getStreams } from '../../actions';
 
-class StreamList extends React.Component {
-	componentDidMount() {
-		this.props.getStreams();
-	}
-
-	admins(stream) {
-		if (stream.userId === this.props.currUserId)
+const StreamList = ({ streams, currUserId, isSignedIn, getStreams }) => {
+	const admins = (stream) => {
+		if (stream.userId === currUserId)
 			return (
 				<div className="right floated content">
 					<Link to={`/streams/edit/${stream.id}`} className="ui button primary">
@@ -23,13 +19,13 @@ class StreamList extends React.Component {
 					</Link>
 				</div>
 			);
-	}
+	};
 
-	renderList() {
-		return this.props.streams.map((stream) => {
+	const renderList = () => {
+		return streams.map((stream) => {
 			return (
 				<div className="item" key={stream.id}>
-					{this.admins(stream)}
+					{admins(stream)}
 					<i className="large middle aligned icon camera" />
 					<div className="content">
 						<Link to={`/streams/stream/${stream.id}`} className="header">
@@ -40,10 +36,10 @@ class StreamList extends React.Component {
 				</div>
 			);
 		});
-	}
+	};
 
-	createStreamLink() {
-		if (this.props.isSignedIn) {
+	const createStreamLink = () => {
+		if (isSignedIn) {
 			return (
 				<div style={{ textAlign: 'right' }}>
 					<Link to="/streams/new" className="ui button primary">
@@ -52,20 +48,21 @@ class StreamList extends React.Component {
 				</div>
 			);
 		}
-	}
+	};
 
-	render() {
-		const list = this.renderList();
-		const link = this.createStreamLink();
-		return (
-			<div>
-				<h2>Streams</h2>
-				<div className="ui celled list">{list}</div>
-				{link}
-			</div>
-		);
-	}
-}
+	const list = renderList();
+	const link = createStreamLink();
+
+	useEffect(() => getStreams, []);
+
+	return (
+		<div>
+			<h2>Streams</h2>
+			<div className="ui celled list">{list}</div>
+			{link}
+		</div>
+	);
+};
 
 const mapStateToProps = (state) => {
 	return {
