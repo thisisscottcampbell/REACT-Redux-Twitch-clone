@@ -1,33 +1,30 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { getStream, editStream } from '../../actions/index';
 import StreamForm from './StreamForm';
 
-class StreamEdit extends React.Component {
-	componentDidMount() {
-		this.props.getStream(this.props.match.params.id);
-	}
+const StreamEdit = ({ getStream, editStream, match, stream }) => {
+	const { id } = match.params;
 
-	callEdit = (formValues) =>
-		this.props.editStream(this.props.match.params.id, formValues);
+	const callEdit = (formValues) => editStream(id, formValues);
 
-	render() {
-		return this.props.stream ? (
-			<div>
-				<h3>Edit a Stream</h3>
-				<StreamForm
-					initialValues={{
-						title: this.props.stream.title,
-						description: this.props.stream.description,
-					}}
-					callEdit={this.callEdit}
-				/>
-			</div>
-		) : (
-			<div>Loading...</div>
-		);
-	}
-}
+	useEffect(() => getStream(id), []);
+
+	return stream ? (
+		<div>
+			<h3>Edit Your Stream</h3>
+			<StreamForm
+				initialValues={{
+					title: stream.title,
+					description: stream.description,
+				}}
+				callEdit={callEdit}
+			/>
+		</div>
+	) : (
+		<div>Loading...</div>
+	);
+};
 
 const mapStateToProps = (state, ownProps) => {
 	return { stream: state.streams[ownProps.match.params.id] };
